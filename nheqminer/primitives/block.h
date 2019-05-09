@@ -182,6 +182,7 @@ public:
         nVersion = this->nVersion;
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
+        READWRITE(hashFinalSaplingRoot);
         READWRITE(nVibPool);
         READWRITE(nTime);
         READWRITE(nBits);

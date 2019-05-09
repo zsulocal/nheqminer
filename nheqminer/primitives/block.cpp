@@ -128,7 +128,7 @@ std::string CBlock::ToString() const
         nVersion,
         hashPrevBlock.ToString(),
         hashMerkleRoot.ToString(),
-        hashReserved.ToString(),
+        hashFinalSaplingRoot.ToString(),
         nTime, nBits, nNonce.ToString(),
         vtx.size());
     /*for (unsigned int i = 0; i < vtx.size(); i++)
