@@ -50,6 +50,17 @@ endif()
 # Common
 include_directories(${nheqminer_SOURCE_DIR}/nheqminer)
 
+find_package(OpenSSL REQUIRED)
+message("OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")
+message("OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+
+if (OpenSSL_FOUND)
+  include_directories (SYSTEM ${OPENSSL_INCLUDE_DIR})
+  link_directories (${OPENSSL_LIBRARY_DIRS})
+else ()
+    message("OpenSSL_FOUND NOT FOUND")
+endif ()
+
 # BOOST
 #find_package(Threads REQUIRED COMPONENTS)
 # compile boost staticaly
@@ -164,10 +175,11 @@ set(SOURCE_FILES
     )
 
 #set(LIBS ${LIBS} ${Threads_LIBRARIES} ${Boost_LIBRARIES})
-set(LIBS ${LIBS} ${Boost_LIBRARIES})
+set(LIBS ${LIBS} ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
 
 message("-- CXXFLAGS: ${CMAKE_CXX_FLAGS}")
 message("-- LIBS: ${LIBS}")
+message("-- LIBS: TEST")
 
 if (USE_CPU_TROMP)
     add_subdirectory(cpu_tromp)
