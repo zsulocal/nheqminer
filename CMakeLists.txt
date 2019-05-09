@@ -87,6 +87,9 @@ set(SOURCE_FILES
     nheqminer/arith_uint256.cpp
     nheqminer/crypto/sha256.cpp
     nheqminer/crypto/scrypt.cpp
+    nheqminer/crypto/hmac_sha256.cpp
+    nheqminer/crypto/hmac_sha512.cpp
+    nheqminer/crypto/sha512.cpp
     nheqminer/json/json_spirit_reader.cpp
     nheqminer/json/json_spirit_value.cpp
     nheqminer/json/json_spirit_writer.cpp
@@ -102,6 +105,10 @@ set(SOURCE_FILES
     nheqminer/arith_uint256.h
     nheqminer/crypto/sha256.h
     nheqminer/crypto/scrypt.h
+    nheqminer/crypto/hmac_sha256.h
+    nheqminer/crypto/hmac_sha512.h
+    nheqminer/crypto/sha512.h
+    nheqminer/crypto/pbkdf2.h
     nheqminer/hash.h
     nheqminer/json/json_spirit.h
     nheqminer/json/json_spirit_error_position.h
