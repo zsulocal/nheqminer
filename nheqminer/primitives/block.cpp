@@ -9,10 +9,20 @@
 #include "tinyformat.h"
 #include "utilstrencodings.h"
 #include "crypto/common.h"
+#include "crypto/scrypt.h"
 
 uint256 CBlockHeader::GetHash() const
 {
     return SerializeHash(*this);
+}
+
+uint256 CBlockHeader::GetPoWHash() const
+{
+    uint256 thash;
+    CDataStream ss(SER_GETHASH, PROTOCOL_VERSION);
+    ss << (*this);
+    scrypt_1024_1_1_256(ss.str().c_str(), BEGIN(thash));
+    return thash;
 }
 
 uint256 CBlock::BuildMerkleTree(bool* fMutated) const

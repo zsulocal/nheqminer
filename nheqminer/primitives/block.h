@@ -21,14 +21,17 @@ class CBlockHeader
 {
 public:
     // header
-    static const size_t HEADER_SIZE=4+32+32+32+4+4+32; // excluding Equihash solution
+    static const size_t HEADER_SIZE=4+32+32+32+8+4+4+32+32+32; // excluding Equihash solution
     static const int32_t CURRENT_VERSION=4;
     int32_t nVersion;
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
-    uint256 hashReserved;
+    uint256 hashFinalSaplingRoot;
+    int64_t nVibPool;
     uint32_t nTime;
     uint32_t nBits;
+    uint256 hashStateRoot; // qtum
+    uint256 hashUTXORoot; // qtum
     uint256 nNonce;
     std::vector<unsigned char> nSolution;
 
@@ -45,9 +48,12 @@ public:
         nVersion = this->nVersion;
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
-        READWRITE(hashReserved);
+        READWRITE(hashFinalSaplingRoot);
+        READWRITE(nVibPool);
         READWRITE(nTime);
         READWRITE(nBits);
+        READWRITE(hashStateRoot); // qtum
+        READWRITE(hashUTXORoot); // qtum
         READWRITE(nNonce);
         READWRITE(nSolution);
     }
@@ -57,9 +63,12 @@ public:
         nVersion = CBlockHeader::CURRENT_VERSION;
         hashPrevBlock.SetNull();
         hashMerkleRoot.SetNull();
-        hashReserved.SetNull();
+        hashFinalSaplingRoot.SetNull();
+        nVibPool = 0;
         nTime = 0;
         nBits = 0;
+        hashStateRoot.SetNull(); // qtum
+        hashUTXORoot.SetNull(); // qtum
         nNonce = uint256();
         nSolution.clear();
     }
@@ -70,6 +79,8 @@ public:
     }
 
     uint256 GetHash() const;
+
+    uint256 GetPoWHash() const;
 
     int64_t GetBlockTime() const
     {
@@ -83,6 +94,11 @@ class CBlock : public CBlockHeader
 public:
     // network and disk
     std::vector<CTransaction> vtx;
+
+     // memory only
+    mutable CTxOut txoutMasternode; // masternode payment
+    mutable std::vector<CTxOut> voutSuperblock; // superblock payment
+    mutable bool fChecked;
 
     // memory only
     mutable std::vector<uint256> vMerkleTree;
@@ -110,6 +126,9 @@ public:
     {
         CBlockHeader::SetNull();
         vtx.clear();
+        txoutMasternode = CTxOut();
+        voutSuperblock.clear();
+        fChecked = false;
         vMerkleTree.clear();
     }
 
@@ -119,9 +138,12 @@ public:
         block.nVersion       = nVersion;
         block.hashPrevBlock  = hashPrevBlock;
         block.hashMerkleRoot = hashMerkleRoot;
-        block.hashReserved   = hashReserved;
+        block.hashFinalSaplingRoot   = hashFinalSaplingRoot;
+        block.nVibPool       = nVibPool;
         block.nTime          = nTime;
         block.nBits          = nBits;
+        block.hashStateRoot  = hashStateRoot; // qtum
+        block.hashUTXORoot   = hashUTXORoot; // qtum
         block.nNonce         = nNonce;
         block.nSolution      = nSolution;
         return block;
