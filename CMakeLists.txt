@@ -98,6 +98,7 @@ set(SOURCE_FILES
     nheqminer/primitives/block.cpp
     nheqminer/speed.cpp
     nheqminer/uint256.cpp
+    nheqminer/support/cleanse.cpp
     nheqminer/utilstrencodings.cpp
     # headers
     nheqminer/amount.h
@@ -130,6 +131,7 @@ set(SOURCE_FILES
     nheqminer/speed.hpp
     nheqminer/streams.h
     nheqminer/support/allocators/zeroafterfree.h
+    nheqminer/support/cleanse.h
     nheqminer/tinyformat.h
     nheqminer/uint252.h
     nheqminer/uint256.h
