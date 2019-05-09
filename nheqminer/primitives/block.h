@@ -182,9 +182,11 @@ public:
         nVersion = this->nVersion;
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
-        READWRITE(hashReserved);
+        READWRITE(nVibPool);
         READWRITE(nTime);
         READWRITE(nBits);
+        READWRITE(hashStateRoot); // qtum
+        READWRITE(hashUTXORoot); // qtum
     }
 };
 
