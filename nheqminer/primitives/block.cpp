@@ -10,6 +10,7 @@
 #include "utilstrencodings.h"
 #include "crypto/common.h"
 #include "crypto/scrypt.h"
+#include "streams.h"
 
 uint256 CBlockHeader::GetHash() const
 {
